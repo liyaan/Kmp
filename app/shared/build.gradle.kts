@@ -66,7 +66,7 @@ kotlin {
             implementation(libs.compose.uiTooling)
             implementation(libs.ktor.client.okhttp)
             implementation(libs.ktor.client.android)
-
+            implementation(libs.coil.network.okhttp)
 
         }
         commonMain.dependencies {
@@ -82,7 +82,7 @@ kotlin {
             //底部导航
             implementation(libs.navigation.compose)
 
-            //ktor
+            //ktor 网络请求
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.client.content.negotiation)
             implementation(libs.ktor.serialization.kotlinx.json)
@@ -91,6 +91,10 @@ kotlin {
             implementation(libs.ktor.client.logging)
 
             implementation(libs.kotlinx.serialization.json)
+            //图片加载
+//            implementation("androidx.compose.foundation:foundation:1.12.1")
+            implementation(libs.coil.compose)
+            implementation(libs.coil.network.ktor3)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -98,13 +102,16 @@ kotlin {
         jsMain.dependencies {
             implementation(libs.wrappers.browser)
             implementation(libs.ktor.client.js)
+            implementation(libs.coil.network.ktor3)
         }
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
+            implementation(libs.coil.network.ktor3)
         }
         jvmMain.dependencies {
             implementation(libs.ktor.client.java)
             implementation(libs.ktor.client.okhttp)
+            implementation(libs.coil.network.okhttp)
         }
     }
 }
