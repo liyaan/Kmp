@@ -45,7 +45,7 @@ enum class SwiperImageViewType{
     NET_IMAGE,
     RES_IMAGE
 }
-
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun <T> SwiperImageView(
     type:SwiperImageViewType = SwiperImageViewType.NET_IMAGE,
