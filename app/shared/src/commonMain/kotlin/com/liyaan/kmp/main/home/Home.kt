@@ -1,5 +1,6 @@
 package com.liyaan.kmp.main.home
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -20,9 +21,11 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import com.liyaan.kmp.weight.RefreshListView
 import com.liyaan.kmp.weight.SwiperImageView
 import com.liyaan.kmp.weight.SwiperImageViewType
+import com.liyaan.kmp.weight.UseToastViewCompose
 import com.liyaan.test.DemoItem
 import com.liyaan.test.fetchPage
 import kmp.app.shared.generated.resources.Res
@@ -30,6 +33,7 @@ import kmp.app.shared.generated.resources.one
 import kmp.app.shared.generated.resources.third
 import kmp.app.shared.generated.resources.two
 import kotlinx.coroutines.launch
+import kotlin.time.Clock
 
 @Composable
 fun HomeView(){
@@ -99,47 +103,51 @@ fun HomeView(){
         }
     }
 
-    Column {
-        SwiperImageView(
-            imageUrls = bannerList,
-            autoPlayInterval = 3000L,
-            onItemClick={ index ->
-                println("点击了第${index+1}张轮播图")
-            },
-            aspectRatio = 16f/6f,
-            modifier = Modifier.padding(10.dp)
-        )
+    UseToastViewCompose { showToast->
+        Column {
+            SwiperImageView(
+                imageUrls = bannerList,
+                autoPlayInterval = 3000L,
+                onItemClick={ index ->
+                    println("点击了第${index+1}张轮播图")
+                },
+                aspectRatio = 16f/6f,
+                modifier = Modifier.padding(10.dp)
+            )
 
 
-        RefreshListView(
-            items = items,
-            isRefreshing = isRefreshing,
-            isLoadingMore = isLoadingMore,
-            hasMore = hasMore,
-            onRefresh = ::onRefresh,
-            onLoadMore = ::onLoadMore,
-            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
-            headerView = {
-                SwiperImageView(
-                    type = SwiperImageViewType.RES_IMAGE,
-                    imageUrls = bannerRes,
-                    autoPlayInterval = 3000L,
-                    onItemClick={ index ->
-                        println("点击了第${index+1}张轮播图")
+            RefreshListView(
+                items = items,
+                isRefreshing = isRefreshing,
+                isLoadingMore = isLoadingMore,
+                hasMore = hasMore,
+                onRefresh = ::onRefresh,
+                onLoadMore = ::onLoadMore,
+                contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
+                headerView = {
+                    SwiperImageView(
+                        type = SwiperImageViewType.RES_IMAGE,
+                        imageUrls = bannerRes,
+                        autoPlayInterval = 3000L,
+                        onItemClick={ index ->
+                            println("点击了第${index+1}张轮播图")
+                        },
+                        aspectRatio = 16f/6f
+                    )
+                }
+            ) { _, item ->
+                Card(
+                    modifier = Modifier.fillMaxWidth().clickable{
+                        showToast.showToast(item.title, duration = 2000L)
                     },
-                    aspectRatio = 16f/6f
-                )
-            }
-        ) { _, item ->
-            Card(
-                modifier = Modifier.fillMaxWidth(),
-                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
-            ) {
-                Text(
-                    text = item.title,
-                    modifier = Modifier.padding(16.dp),
-                    style = MaterialTheme.typography.bodyLarge
-                )
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
+                ) {
+                    Text(
+                        text = item.title,
+                        modifier = Modifier.padding(16.dp),
+                        style = MaterialTheme.typography.bodyLarge,
+                    )
+                }
             }
         }
 
