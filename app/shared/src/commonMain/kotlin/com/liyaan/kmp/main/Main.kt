@@ -12,9 +12,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.liyaan.kmp.main.car.BuyCarView
-import com.liyaan.kmp.main.`class`.OneSelfView
+import com.liyaan.kmp.main.`class`.ClassView
 import com.liyaan.kmp.main.home.HomeView
-import com.liyaan.kmp.main.one.ClassView
+import com.liyaan.kmp.main.one.OneSelfView
 import com.liyaan.kmp.weight.BottomNavItem
 import com.liyaan.kmp.weight.BottomNavigationView
 import kmp.app.shared.generated.resources.Res
